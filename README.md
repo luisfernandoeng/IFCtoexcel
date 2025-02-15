@@ -1,23 +1,118 @@
-Este programa foi desenvolvido para ler arquivos no formato IFC (Industry Foundation Classes) e extrair informações relevantes sobre o comprimento de tubos utilizados em sistemas hidráulicos e eletrodutos para instalações elétricas. O objetivo é facilitar a análise de projetos de engenharia, permitindo que profissionais da área obtenham dados precisos sobre os componentes de tubulação em seus projetos.
+# 🚰 **IFC to Excel: Extração de Dados de Tubos Hidráulicos e Eletrodutos**
 
-O programa possui duas funcionalidades principais:
+![Python](https://img.shields.io/badge/Python-3.7%20|%203.8%20|%203.9%20|%203.10-blue?logo=python) ![IFC](https://img.shields.io/badge/IFC-Extractor-orange)
 
-Extração de Comprimento de Tubos Hidráulicos: Através da função extract_pipe_lengths, o usuário pode obter o comprimento total dos tubos hidráulicos presentes no arquivo IFC. Os dados são organizados por família e tipo de tubo, e exportados para um arquivo CSV.
+> **O IFC to Excel é uma ferramenta Python desenvolvida para extrair informações precisas sobre comprimentos de tubos hidráulicos e eletrodutos de arquivos IFC (Industry Foundation Classes). O objetivo é facilitar a análise de projetos de engenharia, permitindo que profissionais obtenham dados organizados em formato CSV para uso em planilhas Excel.**
 
-Extração de Comprimento de Eletrodutos: A função extract_electrical_lengths realiza uma tarefa semelhante, mas focada em segmentos elétricos, como conduítes e bandejas de cabos. Os resultados também são exportados para um arquivo CSV, com formatação adequada para o Brasil.
+---
 
-Ambas as funções incluem uma etapa de depuração (debug_ifc) que permite ao usuário visualizar as entidades IFC encontradas no arquivo, facilitando a identificação de componentes.
+## 🌟 **Recursos Principais**
 
-##
+✅ **Extração de Comprimento de Tubos Hidráulicos**:  
+- Calcula o comprimento total dos tubos hidráulicos presentes no arquivo IFC.  
+- Organiza os dados por família e tipo de tubo.  
+- Exporta os resultados para um arquivo CSV formatado para o Brasil.
 
-This program is designed to read files in the IFC (Industry Foundation Classes) format and extract relevant information about the lengths of pipes used in hydraulic systems and conduits for electrical installations. The aim is to facilitate engineering project analysis by allowing professionals in the field to obtain accurate data about the piping components in their designs.
+✅ **Extração de Comprimento de Eletrodutos**:  
+- Extrai o comprimento de segmentos elétricos, como conduítes e bandejas de cabos.  
+- Os dados são exportados para um arquivo CSV com formatação adequada.
 
-The program has two main functionalities:
+✅ **Depuração de Entidades IFC**:  
+- A função `debug_ifc` permite visualizar as entidades IFC encontradas no arquivo, facilitando a identificação de componentes.
 
-Extraction of Hydraulic Pipe Lengths: Through the extract_pipe_lengths function, users can obtain the total length of hydraulic pipes present in the IFC file. The data is organized by family and type of pipe and exported to a CSV file.
+✅ **Compatível com Ferramentas BIM**:  
+- Funciona com arquivos IFC gerados por softwares como Revit, ArchiCAD e outros.
 
-Extraction of Electrical Conduit Lengths: The extract_electrical_lengths function performs a similar task but focuses on electrical segments, such as conduits and cable trays. The results are also exported to a CSV file, formatted appropriately for Brazil.
+---
 
-Both functions include a debugging step (debug_ifc) that allows users to view the IFC entities found in the file, making it easier to identify components.
+## 🛠️ **Como Usar**
 
-Esta descrição pode ser utilizada na seção README do seu repositório no GitHub para fornecer uma visão clara e concisa do propósito e funcionamento do seu programa.
+### **Pré-requisitos**
+
+1. **Python**: Certifique-se de ter o Python instalado (versão 3.7 ou superior).  
+   [Baixe aqui](https://www.python.org/downloads/).
+
+2. **Biblioteca `ifcopenshell`**: Instale a biblioteca usando o pip:
+   ```bash
+   pip install ifcopenshell
+   ```
+
+### **Execução**
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/luisfernandoeng/IFCtoexcel.git
+   cd ifc-to-excel
+   ```
+
+2. Execute o script:
+   ```python
+   python extract_data.py "caminho/do/arquivo.ifc"
+   ```
+
+3. Verifique os arquivos CSV gerados (`pipe_lengths.csv` e `electrical_lengths.csv`) no diretório atual.
+
+---
+
+## 📊 **Exemplo de Resultados**
+
+### **Saída CSV para Tubos Hidráulicos**
+| **Família**       | **Tipo**          | **Comprimento Total (m)** |
+|--------------------|-------------------|---------------------------|
+| PVC               | Tubo de 50mm      | 120.500                   |
+| Metal             | Tubo de 25mm      | 85.750                    |
+
+### **Saída CSV para Eletrodutos**
+| **Família**       | **Tipo**          | **Comprimento Total (m)** |
+|--------------------|-------------------|---------------------------|
+| Conduíte          | 20mm              | 200.000                   |
+| Bandeja de Cabos  | 300x100mm         | 50.250                    |
+
+---
+
+## 🧩 **Funcionalidades Detalhadas**
+
+### **1. Depuração de Entidades IFC**
+A função `debug_ifc` lista todas as entidades IFC encontradas no arquivo, ajudando a identificar os tipos de componentes disponíveis. Exemplo de saída:
+
+```
+Entidades IFC encontradas:
+IfcFlowSegment: 45 elementos
+IfcWall: 120 elementos
+IfcDoor: 10 elementos
+...
+```
+
+### **2. Extração de Comprimento de Tubos Hidráulicos**
+A função `extract_pipe_lengths` calcula o comprimento total dos tubos hidráulicos e organiza os dados por família e tipo. Exemplo de saída:
+
+```
+Total de tubos: 45
+Comprimento total dos tubos: 206.250 m
+Dados exportados para pipe_lengths.csv
+```
+
+### **3. Extração de Comprimento de Eletrodutos**
+A função `extract_electrical_lengths` realiza uma tarefa semelhante para segmentos elétricos, como conduítes e bandejas de cabos.
+
+---
+
+## 📝 **Explicação do Código**
+
+O script realiza as seguintes etapas:
+
+1. **Carregamento do Modelo**:  
+   Usa a biblioteca `ifcopenshell` para carregar o arquivo IFC.
+
+2. **Identificação de Componentes**:  
+   - Para tubos hidráulicos, busca entidades do tipo `IfcFlowSegment`.  
+   - Para eletrodutos, busca entidades relacionadas a conduítes e bandejas de cabos.
+
+3. **Cálculo de Comprimentos**:  
+   - Extrai a geometria dos componentes (por exemplo, `IfcExtrudedAreaSolid`) para calcular o comprimento.  
+   - Agrupa os dados por família e tipo.
+
+4. **Exportação para CSV**:  
+   Gera arquivos CSV com os resultados organizados.
+
+---
